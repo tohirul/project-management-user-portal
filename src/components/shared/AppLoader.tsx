@@ -12,71 +12,57 @@ function AppLoader() {
 
   useEffect(() => {
     const balls = ballRefs.current;
-
-    // ✅ Wait until all refs are set
     if (balls.length !== ballCount || balls.some((b) => b == null)) return;
 
-    // ✅ Set initial colors
+    // Set initial background color
     balls.forEach((ball, i) => {
       gsap.set(ball, { backgroundColor: assignedColors.current[i] });
     });
 
-    const tl = gsap.timeline({ repeat: -1 });
+    // Each ball has its own looped animation
+    balls.forEach((ball, i) => {
+      const tl = gsap.timeline({ repeat: -1, delay: i * 0.15 });
 
-    // Jump up (wave)
-    tl.to(balls, {
-      y: -60,
-      duration: 0.4,
-      ease: "sine.inOut",
-      stagger: 0.1,
-    });
-
-    // Drop down and swap colors
-    tl.to(balls, {
-      y: 0,
-      duration: 0.4,
-      ease: "sine.inOut",
-      stagger: {
-        each: 0.1,
-        onStart: (i: number) => {
+      tl.to(ball, {
+        y: -60,
+        duration: 0.4,
+        ease: "sine.inOut",
+      }).to(ball, {
+        y: 0,
+        duration: 0.4,
+        ease: "sine.inOut",
+        onComplete: () => {
           const nextIndex = (i + 1) % ballCount;
 
-          const currentColor = assignedColors.current[i];
+          // Swap colors in array
+          const temp = assignedColors.current[i];
           assignedColors.current[i] = assignedColors.current[nextIndex];
-          assignedColors.current[nextIndex] = currentColor;
+          assignedColors.current[nextIndex] = temp;
 
-          const currentBall = balls[i];
-          const nextBall = balls[nextIndex];
-
-          if (currentBall) {
-            gsap.to(currentBall, {
-              backgroundColor: assignedColors.current[i],
-              duration: 0.3,
-              ease: "power1.inOut",
-            });
-          }
-
-          if (nextBall) {
-            gsap.to(nextBall, {
-              backgroundColor: assignedColors.current[nextIndex],
-              duration: 0.3,
-              ease: "power1.inOut",
-            });
-          }
+          // Animate the color change (on drop complete)
+          gsap.to(ballRefs.current[i], {
+            backgroundColor: assignedColors.current[i],
+            duration: 0.3,
+            ease: "power1.inOut",
+          });
+          gsap.to(ballRefs.current[nextIndex], {
+            backgroundColor: assignedColors.current[nextIndex],
+            duration: 0.3,
+            ease: "power1.inOut",
+          });
         },
-      },
+      });
     });
   }, []);
 
   return (
-    <div className="flex h-screen flex-col items-center justify-center space-y-4 bg-white">
-      {/* Ball Wave */}
+    <div className="bg-dark flex h-screen min-w-screen flex-col items-center justify-center space-y-4">
       <div className="flex space-x-2">
         {Array.from({ length: ballCount }).map((_, i) => (
           <div
             key={i}
             ref={(el) => {
-              ballRefs.current[i] = el!;
+              if (el) ballRefs.current[i] = el;
             }}
             className="h-6 w-6 rounded-full shadow-md"
           ></div>

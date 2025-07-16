@@ -142,7 +142,7 @@ const SidebarLink = ({
       <div
         className={cn(
           "dark:bg-dark relative flex cursor-pointer items-center justify-start gap-3 px-8 py-3 transition-colors hover:bg-gray-100 dark:hover:bg-gray-800",
-          isActive ? "bg-gray-100 text-white dark:bg-gray-900" : "",
+          isActive ? "bg-dark text-white" : "",
         )}
       >
         {isActive && (

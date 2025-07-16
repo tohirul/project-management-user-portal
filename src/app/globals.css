@@ -198,7 +198,7 @@
    Custom Utility Backgrounds
 ───────────────────────────────────────────────────── */
 .bg-dark {
-  @apply dark:bg-[#101214] dark:text-white;
+  @apply bg-gray-100 dark:bg-[#101214] dark:text-white;
 }
 
 .bg-dark-secondary {

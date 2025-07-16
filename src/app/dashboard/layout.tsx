@@ -4,6 +4,7 @@ import Sidebar from "@/components/sidebar";
 import ThemeProvider from "@/Providers/ThemeProvider";
 import StoreProvider from "@/Providers/StoreProvider";
 import CollapsibleMainProvider from "@/Providers/CollapsibleMainProvider";
+import LoadProvider from "@/Providers/LoadProvider";
 
 export default function DashboardLayout({
   children,
@@ -14,11 +15,13 @@ export default function DashboardLayout({
     <StoreProvider>
       <ThemeProvider>
         <div className="flex min-h-screen w-full text-gray-900">
-          <Sidebar />
-          <CollapsibleMainProvider>
-            <Navbar />
-            {children}
-          </CollapsibleMainProvider>
+          <LoadProvider>
+            <Sidebar />
+            <CollapsibleMainProvider>
+              <Navbar />
+              {children}
+            </CollapsibleMainProvider>
+          </LoadProvider>
         </div>
       </ThemeProvider>
     </StoreProvider>
