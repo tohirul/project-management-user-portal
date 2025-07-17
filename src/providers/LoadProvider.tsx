@@ -15,7 +15,7 @@ export default function LoadProvider({
     const interval = setInterval(() => {
       setIsReady(true);
       clearInterval(interval);
-    }, 1000);
+    }, 3000);
 
     return () => clearInterval(interval);
   }, []);

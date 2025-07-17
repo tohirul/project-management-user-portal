@@ -1,6 +1,6 @@
 "use client";
 
-import { Menu, MoonIcon, Search, Settings, SunIcon } from "lucide-react";
+import { Menu, X, MoonIcon, Search, Settings, SunIcon } from "lucide-react";
 import Link from "next/link";
 import { useAppDispatch, useAppSelector } from "@/hooks/reduxHooks";
 import { toggleTheme } from "@/store/slice/state/themeSlice";
@@ -18,10 +18,19 @@ export default function Navbar() {
   };
 
   return (
-    <div className="flex items-center justify-between bg-white px-4 py-3 dark:bg-black">
+    <div className="flex items-center justify-between bg-white px-4 py-2 dark:bg-black">
       {/* Search Bar */}
       <div className="flex items-center justify-center gap-6">
-        {!isSidebarCollapsed ? null : (
+        {!isSidebarCollapsed ? (
+          <button
+            className="cursor-pointer py-3"
+            onClick={() => {
+              dispatch(setIsSidebarCollapsed(!isSidebarCollapsed));
+            }}
+          >
+            <X className="h-6 w-6 text-gray-800 hover:text-gray-500 dark:text-white" />
+          </button>
+        ) : (
           <button
             className="cursor-pointer py-3"
             onClick={() => {

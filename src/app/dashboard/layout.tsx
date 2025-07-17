@@ -1,10 +1,10 @@
 import React from "react";
 import Navbar from "@/components/navbar";
 import Sidebar from "@/components/sidebar";
-import ThemeProvider from "@/Providers/ThemeProvider";
-import StoreProvider from "@/Providers/StoreProvider";
-import CollapsibleMainProvider from "@/Providers/CollapsibleMainProvider";
-import LoadProvider from "@/Providers/LoadProvider";
+import ThemeProvider from "@/providers/ThemeProvider";
+import StoreProvider from "@/providers/StoreProvider";
+import CollapsibleMainProvider from "@/providers/CollapsibleMainProvider";
+import LoadProvider from "@/providers/LoadProvider";
 
 export default function DashboardLayout({
   children,
@@ -14,7 +14,7 @@ export default function DashboardLayout({
   return (
     <StoreProvider>
       <ThemeProvider>
-        <div className="flex min-h-screen w-full text-gray-900">
+        <div className="bg-dark flex min-h-screen w-full text-gray-900">
           <LoadProvider>
             <Sidebar />
             <CollapsibleMainProvider>
