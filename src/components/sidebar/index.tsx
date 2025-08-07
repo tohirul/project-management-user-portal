@@ -50,7 +50,7 @@ function Sidebar() {
         );
         gsap.fromTo(
           content,
-          { autoAlpha: 0, y: 25 },
+          { autoAlpha: 0, y: 10 },
           { autoAlpha: 1, y: 0, duration: 0.5, delay: 0.1 },
         );
       } else {
@@ -72,45 +72,49 @@ function Sidebar() {
   );
 
   return (
-    <div
-      ref={sidebarRef}
-      className="fixed top-0 left-0 z-40 flex h-full w-64 flex-col bg-white dark:bg-black"
-    >
+    !isSidebarCollapsed && (
       <div
-        ref={contentRef}
-        className="flex h-full w-full flex-col justify-start"
+        ref={sidebarRef}
+        className="fixed top-0 left-0 z-40 flex h-full w-64 flex-col bg-white dark:bg-black"
       >
-        {/* TOP LOGO */}
-        <div className="z-50 flex min-h-[56px] items-center justify-between bg-white px-6 pt-3 dark:bg-black">
-          <div className="text-xl font-bold text-gray-800 dark:text-white">
-            EDLIST
-          </div>
-        </div>
-
-        {/* TEAM */}
-        <div className="flex items-center gap-5 border-y-[1.5px] border-gray-200 px-8 py-4 dark:border-gray-700">
-          <Image
-            src="/logo.png"
-            alt="Logo"
-            width={40}
-            height={40}
-            className="rounded-full"
-          />
-          <div>
-            <h3 className="text-md font-bold tracking-wide dark:text-gray-200">
-              EDROH TEAM
-            </h3>
-            <div className="mt-1 flex items-start gap-2">
-              <LockIcon className="mt-[.1rem] h-3 w-3 text-gray-500 dark:text-gray-400" />
-              <p className="text-xs text-gray-500">Private</p>
+        {
+          <div
+            ref={contentRef}
+            className="flex h-full w-full flex-col justify-start"
+          >
+            {/* TOP LOGO */}
+            <div className="z-50 flex min-h-[56px] items-center justify-between bg-white px-6 pt-3 dark:bg-black">
+              <div className="text-xl font-bold text-gray-800 dark:text-white">
+                EDLIST
+              </div>
             </div>
-          </div>
-        </div>
 
-        {/* Nav */}
-        <SidebarNav />
+            {/* TEAM */}
+            <div className="flex items-center gap-5 border-y-[1.5px] border-gray-200 px-8 py-4 dark:border-gray-700">
+              <Image
+                src="/logo.png"
+                alt="Logo"
+                width={40}
+                height={40}
+                className="rounded-full"
+              />
+              <div>
+                <h3 className="text-md font-bold tracking-wide dark:text-gray-200">
+                  EDROH TEAM
+                </h3>
+                <div className="mt-1 flex items-start gap-2">
+                  <LockIcon className="mt-[.1rem] h-3 w-3 text-gray-500 dark:text-gray-400" />
+                  <p className="text-xs text-gray-500">Private</p>
+                </div>
+              </div>
+            </div>
+
+            {/* Nav */}
+            <SidebarNav />
+          </div>
+        }
       </div>
-    </div>
+    )
   );
 }
 
