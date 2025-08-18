@@ -25,9 +25,9 @@ export default function CollapsibleMainProvider({
       if (!el) return;
 
       gsap.to(el, {
-        paddingLeft: isSidebarCollapsed ? 0 : "16rem", // 256px
-        duration: 0.4,
-        ease: "power2.inOut",
+        paddingLeft: isSidebarCollapsed ? 0 : "16rem",
+        duration: 0.5,
+        ease: "power3.inOut",
       });
     },
     { dependencies: [isSidebarCollapsed] },
