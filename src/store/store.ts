@@ -11,18 +11,18 @@ import {
 } from "redux-persist";
 import { setupListeners } from "@reduxjs/toolkit/query";
 import rootReducer from "./rootReducer";
-import { api } from "@/store/slice/api";
+import { apiV1 } from "@/store/slice/api/v1";
 
 export const makeStore = (): EnhancedStore => {
   const store = configureStore({
     reducer: rootReducer,
     devTools: process.env.NODE_ENV !== "production",
-    middleware: (getDefaultMiddleware) =>
+    middleware: (getDefaultMiddleware: ReturnType<AppStore["getState"]>) =>
       getDefaultMiddleware({
         serializableCheck: {
           ignoredActions: [FLUSH, REHYDRATE, PAUSE, PERSIST, PURGE, REGISTER],
         },
-      }).concat(api.middleware),
+      }).concat(apiV1.middleware),
   });
 
   setupListeners(store.dispatch);

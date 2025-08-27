@@ -1,12 +1,12 @@
+// rootReducer.ts
 import { combineReducers } from "@reduxjs/toolkit";
 import globalReducer from "@/store/slice/state";
-import { api } from "@/store/slice/api";
+import apiV1 from "@/store/slice/api/v1";
 
 const rootReducer = combineReducers({
   global: globalReducer,
-  [api.reducerPath]: api.reducer,
+  [apiV1.reducerPath]: apiV1.reducer,
 });
-// const rootReducer = persistReducer(persistConfig, reducer);
 
 export type RootReducerType = ReturnType<typeof rootReducer>;
 export default rootReducer;
