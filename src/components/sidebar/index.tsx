@@ -50,7 +50,7 @@ function Sidebar() {
         );
         gsap.fromTo(
           content,
-          { autoAlpha: 0, y: 10 },
+          { autoAlpha: 0, y: 5 },
           { autoAlpha: 1, y: 0, duration: 0.5, delay: 0.1 },
         );
       } else {

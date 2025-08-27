@@ -1,3 +1,4 @@
+// src/types/data.types.ts
 import { Priority, Status } from "@/constants/enum";
 
 export interface Project {
