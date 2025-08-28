@@ -33,4 +33,8 @@ export const {
   useGetCurrentUserQuery,
 } = userApi;
 
+export interface UserApi {
+  endpoints: typeof userApi.endpoints;
+  util: typeof userApi.util;
+}
 export default userApi;

@@ -1,5 +1,6 @@
 // store/slice/v1.ts
 import { createBaseApi } from "@/store/slice/api";
+import { ApiResponse } from "@/types/common.types";
 import type { BaseQueryFn, EndpointBuilder } from "@reduxjs/toolkit/query";
 import type {
   FetchArgs,
@@ -42,11 +43,11 @@ export const makeCrudEndpoints = <
       invalidatesTags: [{ type: entityName as string as TagTypes }],
     }),
 
-    list: build.query<T[], void>({
+    list: build.query<ApiResponse<Array<T>>, void>({
       query: () => ({ method: "GET", url: resourcePath }),
       providesTags: (result) =>
-        result && result.length
-          ? result.map((item) => ({
+        result && result?.data?.length
+          ? result?.data?.map((item) => ({
               type: entityName as string as TagTypes,
               id: item[primaryKey],
             }))
@@ -85,7 +86,7 @@ export const makeCrudEndpoints = <
 /**
  * Base API for v1
  */
-export const apiV1 = createBaseApi("v1", [
+const apiV1 = createBaseApi("v1", [
   "User",
   "Project",
   "Task",

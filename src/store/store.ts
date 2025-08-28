@@ -11,7 +11,7 @@ import {
 } from "redux-persist";
 import { setupListeners } from "@reduxjs/toolkit/query";
 import rootReducer from "./rootReducer";
-import { apiV1 } from "@/store/slice/api/v1";
+import apiV1 from "@/store/slice/api/v1";
 
 export const makeStore = (): EnhancedStore => {
   const store = configureStore({
