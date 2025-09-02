@@ -4,6 +4,11 @@ export type ApiResponse<T> = {
   message: string;
   response: string;
   data: T;
+  meta?: {
+    total: number;
+    page: number;
+    limit: number;
+  };
 };
 
 export interface Api<T, Q> {
