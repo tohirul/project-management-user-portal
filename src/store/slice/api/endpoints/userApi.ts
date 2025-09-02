@@ -5,6 +5,7 @@ import type { User } from "@/types/data.types";
 const ENTITY = "User";
 const ENTITY_PLURAL = "users";
 const PRIMARY_KEY = "userId";
+const FILTER_KEYS: Array<keyof User & string> = ["userId", "username"];
 
 const userApi = apiV1.injectEndpoints({
   endpoints: (build) => ({
@@ -12,12 +13,13 @@ const userApi = apiV1.injectEndpoints({
       ENTITY,
       ENTITY_PLURAL,
       PRIMARY_KEY,
+      FILTER_KEYS,
     )(build),
 
     // Custom endpoint example
     getCurrentUser: build.query<User, void>({
       query: () => ({ method: "GET", url: `/${ENTITY_PLURAL}/current` }),
-      providesTags: [`${ENTITY_PLURAL}`],
+      providesTags: [{ type: ENTITY as unknown as string }],
     }),
   }),
   overrideExisting: false,
@@ -33,8 +35,10 @@ export const {
   useGetCurrentUserQuery,
 } = userApi;
 
+// Optional: typed interface
 export interface UserApi {
   endpoints: typeof userApi.endpoints;
   util: typeof userApi.util;
 }
+
 export default userApi;
