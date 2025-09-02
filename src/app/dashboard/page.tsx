@@ -1,6 +1,6 @@
 "use server";
 
-import { fetchList } from "@/lib/api/fetchList";
+import { fetchList } from "@/lib/query/fetchList";
 import userApi from "@/store/slice/api/endpoints/userApi";
 // import serverStore, { ServerDispatch } from "@/store/serverStore";
 // import userApi from "@/store/slice/api/endpoints/userApi";
