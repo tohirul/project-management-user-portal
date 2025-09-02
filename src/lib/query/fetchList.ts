@@ -1,5 +1,5 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-// lib/serverFetch.ts
+// lib/query/serverFetch.ts
 import { makeServerStore, ServerDispatch } from "@/store/serverStore";
 import { Api } from "@/types/common.types";
 
