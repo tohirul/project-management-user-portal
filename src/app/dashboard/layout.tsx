@@ -1,7 +1,7 @@
 // src/app/dashboard/layout.tsx
 import React from "react";
-import Navbar from "@/components/navbar";
-import Sidebar from "@/components/sidebar";
+import Navbar from "@/components/layout/navbar";
+import Sidebar from "@/components/layout/sidebar";
 import ThemeProvider from "@/providers/ThemeProvider";
 import StoreProvider from "@/providers/StoreProvider";
 import CollapsibleMainProvider from "@/providers/CollapsibleMainProvider";
