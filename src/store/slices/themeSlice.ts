@@ -1,8 +1,7 @@
 // state/slices/themeSlice.ts
-
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 import { persistReducer } from "redux-persist";
-import storage from "redux-persist/lib/storage";
+import storage from "@/store/persistStorage";
 import { encryptTransform } from "redux-persist-transform-encrypt";
 
 export type ThemeMode = "light" | "dark";
@@ -29,7 +28,7 @@ const themeSlice = createSlice({
 });
 
 export const { setTheme, toggleTheme } = themeSlice.actions;
-// export default themeSlice.reducer; // without persisted
+
 export default persistReducer(
   {
     key: "theme",
@@ -37,9 +36,7 @@ export default persistReducer(
     transforms: [
       encryptTransform({
         secretKey: process.env.NEXT_PUBLIC_ENCRYPT_SECRET || "fallback-secret",
-        onError: function (error) {
-          console.error("Persist Encryption Error:", error);
-        },
+        onError: (error) => console.error("Persist Encryption Error:", error),
       }),
     ],
   },

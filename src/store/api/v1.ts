@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import {
   BaseQueryFn,
   EndpointBuilder,
@@ -8,6 +9,7 @@ import {
 
 import type { ApiResponse } from "@/types/common.types";
 import { createBaseApi } from ".";
+import { IQueryParams } from "@/types/query.types";
 
 export type FetchBaseQueryType = BaseQueryFn<
   string | FetchArgs,
@@ -27,7 +29,7 @@ export type FetchBaseQueryType = BaseQueryFn<
  */
 export const makeCrudEndpoints = <
   N extends string,
-  T extends Record<K, string | number>,
+  T extends Record<string, any>,
   K extends keyof T & string,
   TagTypes extends string,
 >(
@@ -46,20 +48,14 @@ export const makeCrudEndpoints = <
     /* GET ALL */
     list: build.query<
       ApiResponse<T[]>,
-      | ({
-          page?: number;
-          limit?: number;
-          sortBy?: string;
-          sortOrder?: "asc" | "desc";
-          search?: string;
-        } & Partial<Record<keyof T & string, string | number>>)
-      | void
+      (IQueryParams & Partial<Record<keyof T & string, string | number>>) | void
     >({
       query: (params) => {
+        console.log(`Params: `, params);
         return {
           method: "GET",
           url: resourcePath,
-          params: params ?? undefined,
+          params: params as Record<string, any> | undefined,
         };
       },
       providesTags: (result) =>

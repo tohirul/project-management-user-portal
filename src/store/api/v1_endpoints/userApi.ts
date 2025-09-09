@@ -1,5 +1,5 @@
 // store/slice/userApi.ts
-import apiV1, { makeCrudEndpoints } from "@/store/slice/api/v1";
+import apiV1, { makeCrudEndpoints } from "@/store/api/v1";
 import type { User } from "@/types/data.types";
 
 const ENTITY = "User";
