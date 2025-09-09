@@ -1,7 +1,7 @@
 "use client";
 
 import React, { useEffect } from "react";
-import { useAppSelector } from "@/hooks/reduxHooks";
+import { useAppSelector } from "@/store/hooks";
 import { RootState } from "@/store/store";
 
 export default function ThemeProvider({

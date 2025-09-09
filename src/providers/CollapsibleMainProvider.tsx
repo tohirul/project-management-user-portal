@@ -2,8 +2,8 @@
 
 import React, { useRef } from "react";
 import { RootState } from "@/store/store";
-import { useAppSelector } from "@/hooks/reduxHooks";
-import { cn } from "@/utility";
+import { useAppSelector } from "@/store/hooks";
+import { cn } from "@/lib/utils";
 import gsap from "gsap";
 import { useGSAP } from "@gsap/react";
 
