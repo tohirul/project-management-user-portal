@@ -2,10 +2,10 @@
 
 import { Menu, X, MoonIcon, Search, Settings, SunIcon } from "lucide-react";
 import Link from "next/link";
-import { useAppDispatch, useAppSelector } from "@/hooks/reduxHooks";
-import { toggleTheme } from "@/store/slice/state/themeSlice";
+import { useAppDispatch, useAppSelector } from "@/store/hooks";
+import { toggleTheme } from "@/store/slices/themeSlice";
 import { RootState } from "@/store/store";
-import { setIsSidebarCollapsed } from "@/store/slice/state/sidebarSlice";
+import { setIsSidebarCollapsed } from "@/store/slices/sidebarSlice";
 
 export default function Navbar() {
   const theme = useAppSelector((state) => state.global.theme.mode);

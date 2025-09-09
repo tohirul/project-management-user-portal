@@ -1,8 +1,8 @@
 "use client";
-import { useAppSelector } from "@/hooks/reduxHooks";
+import { useAppSelector } from "@/store/hooks";
 import { RootState } from "@/store/store";
 import { SidebarLinkProps } from "@/types/Prop.types";
-import { cn } from "@/utility";
+import { cn } from "@/lib/utils";
 import {
   AlertCircle,
   AlertOctagon,
@@ -25,6 +25,8 @@ import { usePathname } from "next/navigation";
 import React, { useRef, useState } from "react";
 import { useGSAP } from "@gsap/react";
 import gsap from "gsap";
+import { useListProjectsQuery } from "@/store/api/v1_endpoints/projectApi";
+import { Project } from "@/types/data.types";
 gsap.registerPlugin(useGSAP);
 
 function Sidebar() {
@@ -45,23 +47,23 @@ function Sidebar() {
         gsap.set(el, { display: "flex" });
         gsap.fromTo(
           el,
-          { opacity: 0 },
-          { opacity: 1, duration: 0.5, ease: "sine.in" },
+          { opacity: 0.1 },
+          { opacity: 1, duration: 0.25, ease: "sine.inOut" },
         );
         gsap.fromTo(
           content,
-          { autoAlpha: 0, y: 5 },
-          { autoAlpha: 1, y: 0, duration: 0.5, delay: 0.1 },
+          { autoAlpha: 0, x: -25 },
+          { autoAlpha: 1, x: 0, duration: 0.25, delay: 0.1 },
         );
       } else {
         gsap.to(content, {
           autoAlpha: 0,
-          duration: 0.2,
+          duration: 0.5,
         });
         gsap.to(el, {
           opacity: 0,
-          duration: 0.25,
-          ease: "sine.out",
+          duration: 1.5,
+          ease: "sine.inOut",
           onComplete: () => {
             gsap.set(el, { display: "none" });
           },
@@ -75,7 +77,7 @@ function Sidebar() {
     !isSidebarCollapsed && (
       <div
         ref={sidebarRef}
-        className="fixed top-0 left-0 z-40 flex h-full w-64 flex-col bg-white dark:bg-black"
+        className="sidebar-scroll fixed top-0 left-0 z-40 flex h-full w-64 flex-col overflow-y-auto bg-white pb-12 dark:bg-black"
       >
         {
           <div
@@ -119,7 +121,46 @@ function Sidebar() {
 }
 
 const SidebarNav = () => {
+  const containerRef = useRef<HTMLDivElement>(null);
   const [showProjects, setShowProjects] = useState(false);
+  const { data: result, isSuccess } = useListProjectsQuery({
+    limit: 0,
+    sortOrder: "asc",
+  });
+  useGSAP(
+    () => {
+      const el = containerRef.current;
+      if (!el) return;
+
+      if (showProjects) {
+        // Reset to display block to measure scrollHeight
+        gsap.set(el, { display: "block", height: "auto" });
+        const height = el.scrollHeight;
+
+        gsap.fromTo(
+          el,
+          { height: 0, opacity: 0 },
+          {
+            height,
+            opacity: 1,
+            duration: 0.6,
+            ease: "sine.inOut",
+          },
+        );
+      } else {
+        gsap.to(el, {
+          height: 0,
+          opacity: 0,
+          duration: 0.5,
+          ease: "sine.inOut",
+          onComplete: () => {
+            gsap.set(el, { display: "none" });
+          },
+        });
+      }
+    },
+    { dependencies: [showProjects] },
+  );
 
   return (
     <nav className="z-10 w-full">
@@ -140,16 +181,26 @@ const SidebarNav = () => {
 
       <button
         onClick={() => setShowProjects((prev) => !prev)}
-        className="flex w-full items-center justify-between px-8 py-3 font-medium text-gray-800 dark:text-gray-200"
+        className="flex w-full cursor-pointer items-center justify-between px-8 py-3 font-medium text-gray-800 dark:text-gray-200"
       >
-        <span className="">Projects</span>
+        <span className="py-2">Projects</span>
         {showProjects ? (
           <ChevronUp className="h-5 w-5" />
         ) : (
           <ChevronDown className="h-5 w-5" />
         )}
       </button>
-
+      <div ref={containerRef} style={{ overflow: "hidden", height: 0 }}>
+        {isSuccess &&
+          result?.data?.map((project: Project) => (
+            <SidebarLink
+              key={project.id}
+              icon={Layers3}
+              label={project.name}
+              href={`/dashboard/projects/${project.id}`}
+            />
+          ))}
+      </div>
       <PriorityLinks />
     </nav>
   );
@@ -204,7 +255,7 @@ const PriorityLinks = () => {
         onClick={() => toggleLinks()}
         className="flex w-full cursor-pointer items-center justify-between px-8 py-3 font-medium text-gray-800 dark:text-gray-200"
       >
-        <span className="">Priority</span>
+        <span className="py-2">Priority</span>
         {isOpen ? (
           <ChevronUp className="h-5 w-5" />
         ) : (
