@@ -17,6 +17,9 @@
                 └── 📁projects
                     └── 📁[id]
                         ├── page.tsx
+                    └── 📁components
+                        ├── BoardView.tsx
+                        ├── ProjectHeader.tsx
                     ├── page.tsx
                 ├── layout.tsx
                 ├── page.tsx
@@ -27,15 +30,13 @@
                 ├── header.tsx
                 ├── navbar.tsx
                 ├── sidebar.tsx
-            └── 📁pages
-                ├── ProjectPage.tsx
             └── 📁shared
                 ├── AppLoader.tsx
             └── 📁ui
                 ├── button.tsx
                 ├── input.tsx
-            ├── BoardView.tsx
-            ├── ProjectHeader.tsx
+            └── 📁views
+                ├── ProjectView.tsx
         └── 📁config
             ├── client.ts
             ├── server.ts
@@ -43,14 +44,11 @@
             ├── enum.ts
             ├── projectTabList.ts
         └── 📁hooks
-            ├── reduxHooks.ts
             ├── useAuth.ts
             ├── useDebounce.ts
             ├── useTheme.ts
         └── 📁lib
-            └── 📁query
-                ├── fetchList.ts
-                ├── fetchSingle.ts
+            ├── apiClient.ts
             ├── theme.ts
             ├── utils.ts
         └── 📁providers
@@ -61,7 +59,7 @@
         └── 📁store
             └── 📁api
                 └── 📁v1_endpoints
-                    ├── Attachment.ts
+                    ├── attachmentApi.ts
                     ├── commentApi.ts
                     ├── projectApi.ts
                     ├── taskApi.ts
@@ -72,6 +70,7 @@
                 ├── index.ts
                 ├── sidebarSlice.ts
                 ├── themeSlice.ts
+            ├── hooks.ts
             ├── persistStorage.ts
             ├── rootReducer.ts
             ├── serverStore.ts
@@ -92,6 +91,7 @@
     ├── next.config.ts
     ├── package.json
     ├── postcss.config.mjs
+    ├── project-structure.md
     ├── README.md
     ├── tsconfig.json
     └── yarn.lock

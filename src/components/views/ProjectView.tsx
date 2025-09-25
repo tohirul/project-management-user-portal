@@ -1,6 +1,6 @@
 "use client";
 import React from "react";
-import ProjectHeader from "@/components/ProjectHeader";
+import ProjectHeader from "@/app/dashboard/projects/components/ProjectHeader";
 
 interface ProjectPageProps {
   id: number;
